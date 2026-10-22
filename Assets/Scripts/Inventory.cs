@@ -20,6 +20,26 @@ public class Inventory : MonoBehaviour
         updateDisplay();
     }
 
+    // [Upgrades] how many of a food the player has (0 if they have none yet)
+    public int getCount(string foodName)
+    {
+        if (foodCounts.ContainsKey(foodName))
+            return foodCounts[foodName];
+        return 0;
+    }
+
+    // [Upgrades] takes food out to pay for an upgrade.
+    // returns false and removes nothing if there isn't enough
+    public bool removeFood(string foodName, int amount)
+    {
+        if (getCount(foodName) < amount)
+            return false;
+
+        foodCounts[foodName] -= amount;
+        updateDisplay();
+        return true;
+    }
+
     // rewrites the inventory text, one line per food
     private void updateDisplay()
     {
